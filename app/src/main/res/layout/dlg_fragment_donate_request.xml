@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/edit_name"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="left"
+    android:layout_margin="10dp"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="10dp"
+        android:src="@drawable/applogo"
+        android:id="@+id/imglogo"
+        android:padding="5dp"
+        />
+
+
+    <EditText
+        android:id="@+id/txtcontactperson"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:imeOptions="actionDone"
+        android:hint="Person to Contact"
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        android:inputType="text" />
+    <EditText
+        android:id="@+id/txtcontactnumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:imeOptions="actionDone"
+        android:hint="Contact Number"
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        android:inputType="phone" />
+    <Spinner
+        android:id="@+id/spbgroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#ff0000"
+        android:background="#ffffff"
+        android:layout_gravity="right"
+        android:text="Submit Request"
+        android:id="@+id/btnsubmit"
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        />
+
+
+</LinearLayout>
+
