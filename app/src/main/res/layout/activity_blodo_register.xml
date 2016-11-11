@@ -70,21 +70,21 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Select Your Country"
-            android:id="@+id/lblcountry"
+            android:text="Select Your City"
+            android:id="@+id/lblcity"
             android:layout_below="@+id/spbgroup"
             android:layout_margin="5dp"
             />
         <Spinner
-            android:id="@+id/spcountry"
+            android:id="@+id/spncity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lblcountry"
+            android:layout_below="@+id/lblcity"
             android:layout_margin="5dp"
             />
 
         <LinearLayout
-            android:layout_below="@+id/spcountry"
+            android:layout_below="@+id/spncity"
             android:layout_width="wrap_content"
             android:orientation="horizontal"
             android:layout_alignParentRight="true"

@@ -1,12 +1,15 @@
 package app.wemob.blodo.fragments;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import app.wemob.blodo.R;
 import app.wemob.blodo.interfaces.OnFragmentInteractionListener;
@@ -14,7 +17,7 @@ import app.wemob.blodo.interfaces.OnFragmentInteractionListener;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link profile_fragment.OnFragmentInteractionListener} interface
+ * {@link OnFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link profile_fragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -65,6 +68,43 @@ public class profile_fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile_fragment, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        SharedPreferences userprefer=getActivity().getSharedPreferences("blodouser",Context.MODE_PRIVATE);
+
+        TextView txtmessage=(TextView)view.findViewById(R.id.txtMessage);
+        TextView txtname=(TextView)view.findViewById(R.id.user_profile_name);
+        TextView txtbgroup=(TextView)view.findViewById(R.id.user_bgroup);
+        TextView txtplace=(TextView)view.findViewById(R.id.user_place);
+        TextView txtverified=(TextView)view.findViewById(R.id.user_verfied);
+
+        if(userprefer.getInt("status",0)==0)
+        {
+            txtmessage.setText("You are not registered");
+            txtmessage.setVisibility(View.VISIBLE);
+            txtbgroup.setVisibility(View.INVISIBLE);
+            txtname.setVisibility(View.INVISIBLE);
+            txtplace.setVisibility(View.INVISIBLE);
+            txtverified.setVisibility(View.INVISIBLE);
+        }
+        else
+        {
+            txtmessage.setVisibility(View.GONE);
+            txtbgroup.setVisibility(View.VISIBLE);
+            txtname.setVisibility(View.VISIBLE);
+            txtplace.setVisibility(View.VISIBLE);
+            txtverified.setVisibility(View.VISIBLE);
+        }
+
+
+
+        txtname.setText(userprefer.getString("username",""));
+        txtbgroup.setText(userprefer.getString("bgroup",""));
+        txtplace.setText(userprefer.getString("city",""));
+        txtverified.setText(userprefer.getInt("status",0)==1?"Not Verified":(userprefer.getInt("status",0)==2)?"Verified":"");
     }
 
     // TODO: Rename method, update argument and hook method into UI event

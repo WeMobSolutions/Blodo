@@ -45,18 +45,33 @@
         android:padding="5dp"
         />
 
-    <Button
-        android:layout_width="wrap_content"
+    <Spinner
+        android:id="@+id/spblocation"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#ff0000"
-        android:background="#ffffff"
-        android:layout_gravity="right"
-        android:text="Submit Request"
-        android:id="@+id/btnsubmit"
         android:layout_margin="5dp"
         android:padding="5dp"
         />
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
 
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ff0000"
+            android:background="#ffffff"
+            android:text="Submit"
+            android:id="@+id/btnsubmit"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:elevation="5dp" />
+
+</LinearLayout>
 </LinearLayout>
 

@@ -69,14 +69,14 @@ public class about_fragment extends Fragment {
                 .isRTL(false)
                 .setImage(R.drawable.applogo)
 //                .addItem(versionElement)
-//                .addItem(adsElement)
+
                 .addGroup("Connect with us")
                 .addEmail("wemobsolutions.in@gmail.com")
                 .addWebsite("http://wemobsolutions.com")
 //                .addFacebook("the.medy")
 //                .addTwitter("medyo80")
 //                .addYoutube("UCdPQtdWIsg7_pi4mrRu46vA")
-//                .addPlayStore("com.ideashower.readitlater.pro")
+                .addPlayStore("app.wemob.blodo")
 //                .addGitHub("medyo")
 //                .addInstagram("medyo80")
                 .create();

@@ -3,18 +3,29 @@ package app.wemob.blodo.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
+import java.util.ArrayList;
+
+import app.wemob.blodo.BlodoApp;
+import app.wemob.blodo.BlodoDashboard;
 import app.wemob.blodo.R;
+import app.wemob.blodo.adapter.FaqCardAdapter;
 import app.wemob.blodo.interfaces.OnFragmentInteractionListener;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link faq_fragment.OnFragmentInteractionListener} interface
+ * {@link OnFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link faq_fragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -30,6 +41,10 @@ public class faq_fragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    FaqCardAdapter mAdapter;
+    RecyclerView recyclerView;
+    LinearLayoutManager layoutManager;
 
     public faq_fragment() {
         // Required empty public constructor
@@ -65,6 +80,22 @@ public class faq_fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_faq_fragment, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        AdView mAdView = (AdView) view.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+        ArrayList<String[]> temp=((BlodoApp)getActivity().getApplication()).getFaqs_list();
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this.getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+
+        mAdapter = new FaqCardAdapter((BlodoDashboard)getActivity(),temp);
+        recyclerView.setAdapter(mAdapter);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

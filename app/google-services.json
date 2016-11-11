@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "298648169244",
+    "project_id": "firebase-blodo"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:298648169244:android:9202cc5b0fbff9a2",
+        "android_client_info": {
+          "package_name": "app.wemob.blodo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "298648169244-baa94lt7e9qtlqgobd5jmcu1umdlirro.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.wemob.blodo",
+            "certificate_hash": "2623BB4B231CDB8F93E29E71C1F47613754CFD46"
+          }
+        },
+        {
+          "client_id": "298648169244-v0ss22enrctml4p074nft1klaq14p7q1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCK4TirgIXPx_mp1s5By-sYjvD8P_hARmo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

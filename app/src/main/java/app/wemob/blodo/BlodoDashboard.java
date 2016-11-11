@@ -1,16 +1,14 @@
 package app.wemob.blodo;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.PagerTabStrip;
-import android.support.v4.view.PagerTitleStrip;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -19,7 +17,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,7 +25,12 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+
 import app.wemob.blodo.custom.FontLoader;
+import app.wemob.blodo.fragments.blodo_request_donation_dialog;
 import app.wemob.blodo.fragments.about_fragment;
 import app.wemob.blodo.fragments.donation_request_fragment;
 import app.wemob.blodo.fragments.donor_list_fragment;
@@ -49,16 +51,32 @@ public class BlodoDashboard extends AppCompatActivity implements OnFragmentInter
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
+    InterstitialAd mInterstitialAd;
+
+
     /**
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
 
     private PagerTabStrip dash_pager;
+
+    private int registerstatus;
+
+    public int getRegisterstatus() {
+        return registerstatus;
+    }
+
+    public void setRegisterstatus(int registerstatus) {
+        this.registerstatus = registerstatus;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blodo_dashboard);
+
+        registerstatus=getSharedPreferences("blodouser",MODE_PRIVATE).getInt("status",0);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -69,6 +87,21 @@ public class BlodoDashboard extends AppCompatActivity implements OnFragmentInter
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(getResources().getString(R.string.inter_ad_id));
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                finish();
+                //beginPlayingGame();
+            }
+        });
+
+        requestNewInterstitial();
+
+
 
         Typeface face= Typeface.createFromAsset(getAssets(), FontLoader.Roboto_Bold);
 
@@ -106,11 +139,29 @@ public class BlodoDashboard extends AppCompatActivity implements OnFragmentInter
 
     private void showDonateRequest(FragmentManager manager) {
 
-        BlodoDonationRequest editNameDialog = new BlodoDonationRequest();
+        blodo_request_donation_dialog editNameDialog = new blodo_request_donation_dialog();
         editNameDialog.show(manager, "fragment_edit_name");
 
     }
 
+    private void requestNewInterstitial() {
+        AdRequest adRequest = new AdRequest.Builder()
+//                .addTestDevice("SEE_YOUR_LOGCAT_TO_GET_YOUR_DEVICE_ID")
+                .build();
+
+        mInterstitialAd.loadAd(adRequest);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        } else {
+           finish();
+        }
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -188,10 +239,11 @@ public class BlodoDashboard extends AppCompatActivity implements OnFragmentInter
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
+            SharedPreferences pref=getSharedPreferences("blodouser",MODE_PRIVATE);
             switch (position)
             {
                 case 0:
-                    return home_fragment.newInstance(position+1);
+                    return home_fragment.newInstance(position+1,registerstatus,pref.getString("username",""));
                 case 1:
                     return donor_list_fragment.newInstance(position+1);
                 case 2:

@@ -33,7 +33,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="about_page_description" translatable="false" >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vehicula ligula tortor, in pellentesque dui congue ac. Vestibulum lacinia urna magna, quis cursus ante iaculis nec. Nunc ut ligula sit amet odio ultrices euismod vel vel purus. Sed lacus mauris, aliquam et placerat id</string>
+    <string name="about_page_description" translatable="false">Blodo - A Blood Donor Application Developed by WeMobSolutions Pvt.Ltd. for a Social Cause. Being a corporate with social responsibilities we are proud to present this application to the society. </string>
 
     <string name="about_contact_us">Contact us</string>
     <string name="about_instagram">Follow us on Instagram</string>
@@ -43,4 +43,20 @@
     <string name="about_twitter">Follow us on Twitter</string>
     <string name="about_github">Fork us on GitHub</string>
     <string name="about_website">Visit our website</string>
+
+    <string name="banner_ad_id">ca-app-pub-7798603316556856/4675735320 </string>
+    <string name="inter_ad_id">ca-app-pub-7798603316556856/6152468527</string>
+
+    <string name="title_activity_blodo_otpverification">BlodoOTPVerification</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="enterphonenumber">Enter your phone number</string>
+    <string name="selectcountry">Select country</string>
+    <string name="sending_sms">We\'re sending an sms to</string>
+    <string name="inprogress">Verification in\nprogress</string>
+    <string name="verified">Verification successful</string>
+    <string name="failed">Verification failed</string>
+    <string name="entercode">Please enter the code you received</string>
+S
 </resources>
