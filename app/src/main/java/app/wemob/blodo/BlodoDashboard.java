@@ -38,6 +38,7 @@ import app.wemob.blodo.fragments.faq_fragment;
 import app.wemob.blodo.fragments.home_fragment;
 import app.wemob.blodo.fragments.profile_fragment;
 import app.wemob.blodo.interfaces.OnFragmentInteractionListener;
+import app.wemob.blodo.utils.Validator;
 
 public class BlodoDashboard extends AppCompatActivity implements OnFragmentInteractionListener{
 
@@ -130,7 +131,16 @@ public class BlodoDashboard extends AppCompatActivity implements OnFragmentInter
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDonateRequest(getSupportFragmentManager());
+                SharedPreferences userpreferences=BlodoDashboard.this.getSharedPreferences("blodouser",BlodoDashboard.this.MODE_PRIVATE);
+                if(userpreferences.getInt("status",0)!=2)
+                {
+                                   Validator.showToast(BlodoDashboard.this,"You must verify for calling");
+                }
+                else
+                {
+                    showDonateRequest(getSupportFragmentManager());
+                }
+
 
             }
         });

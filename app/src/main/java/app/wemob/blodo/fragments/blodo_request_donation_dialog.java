@@ -37,6 +37,7 @@ import java.util.Collections;
 import app.wemob.blodo.ApiLinks;
 import app.wemob.blodo.BlodoApp;
 import app.wemob.blodo.R;
+import app.wemob.blodo.utils.Validator;
 import cz.msebera.android.httpclient.Header;
 
 public class blodo_request_donation_dialog extends DialogFragment implements TextView.OnEditorActionListener {
@@ -108,7 +109,11 @@ public class blodo_request_donation_dialog extends DialogFragment implements Tex
 
     private void submitRequest(String name,String number,String bgroup,String location)
     {
-
+        if(!Validator.isNetworkConnectionAvailable(getActivity()))
+        {
+            Validator.showToast(getActivity(),getResources().getString(R.string.network_err));
+            return;
+        }
         final String nameobj=name;
         final String mobileobj=number;
         final String bgobj=bgroup;

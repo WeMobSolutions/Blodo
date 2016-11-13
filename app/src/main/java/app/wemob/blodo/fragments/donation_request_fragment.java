@@ -37,6 +37,7 @@ import app.wemob.blodo.adapter.DonorCardAdapter;
 import app.wemob.blodo.adapter.DonorRequestAdapter;
 import app.wemob.blodo.data.BlodoDonor;
 import app.wemob.blodo.interfaces.OnFragmentInteractionListener;
+import app.wemob.blodo.utils.Validator;
 import cz.msebera.android.httpclient.Header;
 
 /**
@@ -116,6 +117,11 @@ public class donation_request_fragment extends Fragment {
 
     private void getDataSet() {
 
+        if(!Validator.isNetworkConnectionAvailable(getActivity()))
+        {
+            Validator.showToast(getActivity(),getResources().getString(R.string.network_err));
+            return;
+        }
         RequestParams params = new RequestParams();
         params.put("key", 0);
         params.put("value", "*");

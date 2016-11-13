@@ -21,7 +21,16 @@
              android:id="@+id/welcomelayout"
              android:layout_below="@+id/adView"
             >
-
+             <TextClock
+                 android:id="@+id/textClock"
+                 android:layout_width="fill_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_marginTop="30dp"
+                 android:format12Hour="hh:mm:ss a"
+                 android:gravity="center_horizontal"
+                 android:textColor="#000000"
+                 android:textSize="44sp"
+                 android:textStyle="bold" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

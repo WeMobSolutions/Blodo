@@ -50,6 +50,7 @@
             android:layout_below="@+id/txtMessage"
             android:background="#ffffff"
             android:elevation="4dp"
+
             android:paddingBottom="24dp">
 
 
@@ -60,6 +61,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_toLeftOf="@+id/drop_down_option_menu"
+                android:visibility="invisible"
                 android:src="@drawable/about_icon_facebook" />
 
             <ImageView
@@ -69,6 +71,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
+                android:visibility="invisible"
                 android:src="@drawable/about_icon_link" />
 
             <TextView

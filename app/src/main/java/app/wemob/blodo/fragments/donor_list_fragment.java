@@ -29,6 +29,7 @@ import app.wemob.blodo.R;
 import app.wemob.blodo.adapter.DonorCardAdapter;
 import app.wemob.blodo.data.BlodoDonor;
 import app.wemob.blodo.interfaces.OnFragmentInteractionListener;
+import app.wemob.blodo.utils.Validator;
 import cz.msebera.android.httpclient.Header;
 
 /**
@@ -96,14 +97,21 @@ public class donor_list_fragment extends Fragment {
         AdView mAdView = (AdView) view.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
+
         getDataSet();
     }
 
     private void getDataSet() {
 
+        if(!Validator.isNetworkConnectionAvailable(getActivity()))
+        {
+            Validator.showToast(getActivity(),getResources().getString(R.string.network_err));
+            return;
+        }
         RequestParams params = new RequestParams();
         params.put("key", 0);
         params.put("value", "*");
+
 
         AsyncHttpClient client = new AsyncHttpClient();
         client.post(this.getActivity(), ApiLinks.baseURL + "/getDonors", params, new AsyncHttpResponseHandler() {

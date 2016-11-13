@@ -18,12 +18,14 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
+import app.wemob.blodo.utils.Validator;
 import cz.msebera.android.httpclient.Header;
 
 public class BlodoRegister extends AppCompatActivity {
@@ -87,6 +89,11 @@ public class BlodoRegister extends AppCompatActivity {
     }
     private void registerUser(String name,String mobile,String bgroup,String city)
     {
+        if(!Validator.isNetworkConnectionAvailable(this))
+        {
+            Validator.showToast(this,getResources().getString(R.string.network_err));
+            return;
+        }
         final String nameobj=name;
         final String mobileobj=mobile;
         final String bgobj=bgroup;
@@ -104,7 +111,7 @@ public class BlodoRegister extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 
-                storeUserDetails(nameobj,cityobj,bgobj,mobileobj,1);
+
                 String msg=new String(responseBody);
                 try {
                     showMessage(msg,1);
@@ -127,10 +134,11 @@ public class BlodoRegister extends AppCompatActivity {
         });
 
     }
-    private void storeUserDetails(String name,String city,String bgroup,String mob,int status)
+    private void storeUserDetails(int userid,String name,String city,String bgroup,String mob,int status)
     {
         SharedPreferences userpreferences=getSharedPreferences("blodouser",MODE_PRIVATE);
         SharedPreferences.Editor editor = userpreferences.edit();
+        editor.putInt("uid",userid);
         editor.putString("username", name);
         editor.putString("city", city);
         editor.putString("bgroup", bgroup);
@@ -146,6 +154,8 @@ public class BlodoRegister extends AppCompatActivity {
         Toast.makeText(this, msgjson.getString("message"), Toast.LENGTH_SHORT).show();
         resetFields();
         if(status==1) {
+            JSONObject userobj=msgjson.getJSONArray("userdata").getJSONObject(0);
+            storeUserDetails(userobj.getInt("userid"),userobj.getString("name"),userobj.getString("district"),userobj.getString("mobile"),userobj.getString("bgroup"),userobj.getInt("status"));
             showOTPPage();
             finish();
         }

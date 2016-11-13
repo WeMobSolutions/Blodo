@@ -58,5 +58,5 @@
     <string name="verified">Verification successful</string>
     <string name="failed">Verification failed</string>
     <string name="entercode">Please enter the code you received</string>
-S
+    <string name="network_err">Check your device\'s network connectivity</string>
 </resources>

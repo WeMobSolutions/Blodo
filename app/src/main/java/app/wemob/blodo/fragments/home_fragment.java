@@ -2,6 +2,7 @@ package app.wemob.blodo.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import app.wemob.blodo.BlodoOTPVerification;
 import app.wemob.blodo.BlodoRegister;
 import app.wemob.blodo.R;
 import app.wemob.blodo.interfaces.OnFragmentInteractionListener;
@@ -117,6 +119,13 @@ public class home_fragment extends Fragment {
             case 1:
                 message=message+"You Are Not Verified";
                 btnAction.setText("Verify");
+                btnAction.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        callVerifyPage();
+                    }
+                });
+
                 btnAction.setVisibility(View.VISIBLE);
                 break;
             case 2:
@@ -126,6 +135,14 @@ public class home_fragment extends Fragment {
 
         }
         txtmessage.setText(message);
+    }
+
+    private void callVerifyPage() {
+        SharedPreferences userpreferences=this.getActivity().getSharedPreferences("blodouser",getActivity().MODE_PRIVATE);
+        Intent otpPage=new Intent(this.getActivity(),BlodoOTPVerification.class);
+        otpPage.putExtra(BlodoRegister.INTENT_PHONENUMBER,userpreferences.getString("mobile",""));
+        otpPage.putExtra(BlodoRegister.INTENT_COUNTRY_CODE,"91");
+        startActivity(otpPage);
     }
 
     private void callRegisterPage()
