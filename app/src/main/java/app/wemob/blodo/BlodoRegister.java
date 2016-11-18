@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -61,7 +62,7 @@ public class BlodoRegister extends AppCompatActivity {
         Collections.sort(locationArray);
 
         ArrayAdapter<String> locationAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, locationArray);
-        final Spinner spncity = (Spinner)findViewById(R.id.spncity);
+        final AutoCompleteTextView spncity = (AutoCompleteTextView)findViewById(R.id.spncity);
         locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spncity.setAdapter(locationAdapter);
 
@@ -77,7 +78,7 @@ public class BlodoRegister extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                registerUser(txtname.getText().toString(),txtmobile.getText().toString(),spinner.getSelectedItem().toString(),spncity.getSelectedItem().toString());
+                registerUser(txtname.getText().toString(),txtmobile.getText().toString(),spinner.getSelectedItem().toString(),spncity.getText().toString());
             }
         });
 
@@ -155,7 +156,7 @@ public class BlodoRegister extends AppCompatActivity {
         resetFields();
         if(status==1) {
             JSONObject userobj=msgjson.getJSONArray("userdata").getJSONObject(0);
-            storeUserDetails(userobj.getInt("userid"),userobj.getString("name"),userobj.getString("district"),userobj.getString("mobile"),userobj.getString("bgroup"),userobj.getInt("status"));
+            storeUserDetails(userobj.getInt("userid"),userobj.getString("name"),userobj.getString("district"),userobj.getString("bgroup"),userobj.getString("mobile"),userobj.getInt("status"));
             showOTPPage();
             finish();
         }

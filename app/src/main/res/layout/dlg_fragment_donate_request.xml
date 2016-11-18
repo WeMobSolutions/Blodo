@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/edit_name"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -13,7 +14,7 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
         android:layout_margin="10dp"
-        android:src="@drawable/applogo"
+        app:srcCompat="@drawable/applogo"
         android:id="@+id/imglogo"
         android:padding="5dp"
         />
@@ -64,14 +65,25 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#ff0000"
-            android:background="#ffffff"
+            android:textColor="#FFFFFF"
+            android:background="@color/about_youtube_color"
             android:text="Submit"
             android:id="@+id/btnsubmit"
             android:layout_margin="5dp"
             android:padding="5dp"
             android:elevation="5dp" />
 
-</LinearLayout>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:background="@color/about_youtube_color"
+            android:text="Cancel"
+            android:id="@+id/btncancel"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:elevation="5dp" />
+
+    </LinearLayout>
 </LinearLayout>
 

@@ -22,6 +22,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.Manifest;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -57,23 +58,24 @@ public class DonorCardAdapter extends RecyclerView.Adapter<DonorCardAdapter.View
     }
 
     private void call(String mob) {
-        try {
-            Intent callIntent = new Intent(Intent.ACTION_CALL);
-            callIntent.setData(Uri.parse("tel:" + mob));
-            if (ActivityCompat.checkSelfPermission(parentObj, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                parentObj.startActivity(callIntent);
-                return;
+        Intent callIntent = new Intent(Intent.ACTION_CALL); //use ACTION_CALL class
+        callIntent.setData(Uri.parse("tel:"+mob));    //this is the phone number calling
+        //check permission
+        //If the device is running Android 6.0 (API level 23) and the app's targetSdkVersion is 23 or higher,
+        //the system asks the user to grant approval.
+        if (ActivityCompat.checkSelfPermission(parentObj, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            //request permission from user if the app hasn't got the required permission
+            ActivityCompat.requestPermissions(parentObj,
+                    new String[]{Manifest.permission.CALL_PHONE},   //request specific permission from user
+                    10);
+            return;
+        }else {     //have got permission
+            try{
+                parentObj.startActivity(callIntent);  //call activity and make phone call
             }
-
-        } catch (ActivityNotFoundException e) {
-            Log.e("Some error occured", "Call failed", e);
+            catch (android.content.ActivityNotFoundException ex){
+                Toast.makeText(parentObj,"Unknown Error",Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -81,7 +83,7 @@ public class DonorCardAdapter extends RecyclerView.Adapter<DonorCardAdapter.View
     public void onBindViewHolder(ViewHolder holder, int position) {
         final BlodoDonor list =  donors.get(position);
         holder.txtName.setText(list.getName());
-        holder.txtBgroup.setText(list.getBgroup());
+        holder.txtBgroup.setText("Blood Group : "+list.getBgroup());
         holder.txtCity.setText(list.getCity());
         holder.imgCall.setOnClickListener(new View.OnClickListener() {
             @Override

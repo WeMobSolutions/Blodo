@@ -23,19 +23,23 @@
             >
              <TextClock
                  android:id="@+id/textClock"
-                 android:layout_width="fill_parent"
+                 android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
                  android:layout_marginTop="30dp"
                  android:format12Hour="hh:mm:ss a"
-                 android:gravity="center_horizontal"
+                 android:layout_alignParentRight="true"
                  android:textColor="#000000"
                  android:textSize="44sp"
+                 android:layout_margin="5dp"
                  android:textStyle="bold" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
+                android:layout_below="@+id/textClock"
+                android:layout_margin="5dp"
+                android:textSize="15sp"
                 android:id="@+id/txtWelcome"
                 android:text="" />
 
@@ -43,9 +47,13 @@
                  android:text="Verify"
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
-                 android:textColor="@color/colorPrimaryDark"
+                 android:textColor="#FFFFFF"
                  android:visibility="invisible"
                  android:layout_alignParentRight="true"
+                 android:layout_below="@+id/txtWelcome"
+                 android:layout_centerVertical="true"
+                 android:background="@color/colorAccent"
+                 android:layout_margin="5dp"
                  android:id="@+id/btnaction" />
 
          </RelativeLayout>
@@ -53,7 +61,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_margin="3dp"
+        android:layout_margin="6dp"
         android:layout_below="@+id/welcomelayout"
         android:background="#ff0000" />
 

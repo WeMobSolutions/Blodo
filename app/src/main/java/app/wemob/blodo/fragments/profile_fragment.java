@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,7 @@ public class profile_fragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
+    private int mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
@@ -58,7 +59,7 @@ public class profile_fragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam1 = getArguments().getInt(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
@@ -102,7 +103,7 @@ public class profile_fragment extends Fragment {
 
 
         txtname.setText(userprefer.getString("username",""));
-        txtbgroup.setText(userprefer.getString("bgroup",""));
+        txtbgroup.setText(Html.fromHtml("Blood Group : <b>"+userprefer.getString("bgroup","")+"</b>"));
         txtplace.setText(userprefer.getString("city",""));
         txtverified.setText(userprefer.getInt("status",0)==1?"Not Verified":(userprefer.getInt("status",0)==2)?"Verified":"");
     }

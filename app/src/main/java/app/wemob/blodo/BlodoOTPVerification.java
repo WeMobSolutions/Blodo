@@ -240,7 +240,7 @@ public class BlodoOTPVerification extends AppCompatActivity implements ActivityC
 
     private void startTimer() {
         resend_timer.setClickable(false);
-        resend_timer.setTextColor(ContextCompat.getColor(BlodoOTPVerification.this, R.color.sendotp_grey));
+        resend_timer.setTextColor(ContextCompat.getColor(BlodoOTPVerification.this, android.R.color.white));
         new CountDownTimer(30000, 1000) {
             int secondsLeft = 0;
 
@@ -254,7 +254,7 @@ public class BlodoOTPVerification extends AppCompatActivity implements ActivityC
             public void onFinish() {
                 resend_timer.setClickable(true);
                 resend_timer.setText("Resend via call");
-                resend_timer.setTextColor(ContextCompat.getColor(BlodoOTPVerification.this, R.color.colorPrimaryDark));
+                resend_timer.setTextColor(0xFFFFFF);
             }
         }.start();
     }

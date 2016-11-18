@@ -1,6 +1,7 @@
 package app.wemob.blodo;
 
 import android.app.Application;
+import android.support.v7.app.AppCompatDelegate;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -24,7 +25,7 @@ public class BlodoApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         countries_list=new ArrayList<City>();
         faqs_list=new ArrayList<String[]>();
         try {

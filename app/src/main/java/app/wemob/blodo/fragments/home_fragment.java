@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +38,7 @@ public class home_fragment extends Fragment {
     private static final String ARG_USER="user";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
+    private int mParam1;
     private int mRegisterStatus;
     private String mUserName;
 
@@ -69,7 +70,7 @@ public class home_fragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam1 = getArguments().getInt(ARG_PARAM1);
             mRegisterStatus = getArguments().getInt(ARG_PARAM2);
             mUserName=getArguments().getString(ARG_USER);
         }
@@ -100,13 +101,13 @@ public class home_fragment extends Fragment {
 
 
         TextView txtmessage=(TextView)view.findViewById(R.id.txtWelcome);
-        String message="Welcome "+mUserName+".";
+        String message="Welcome <b>"+mUserName+"</b>.";
 
         Button btnAction=(Button)view.findViewById(R.id.btnaction);
         switch (mRegisterStatus)
         {
             case 0:
-                message=message+"You Are Not Registered";
+                message=message+"<font color='#cd201f'>You Are Not Registered</font>";
                 btnAction.setText("Register");
                 btnAction.setVisibility(View.VISIBLE);
                 btnAction.setOnClickListener(new View.OnClickListener() {
@@ -117,7 +118,7 @@ public class home_fragment extends Fragment {
                 });
                 break;
             case 1:
-                message=message+"You Are Not Verified";
+                message=message+"<font color='#cd201f'>You Are Not Verified</font>";
                 btnAction.setText("Verify");
                 btnAction.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -134,7 +135,7 @@ public class home_fragment extends Fragment {
                 break;
 
         }
-        txtmessage.setText(message);
+        txtmessage.setText(Html.fromHtml(message));
     }
 
     private void callVerifyPage() {

@@ -97,6 +97,15 @@ public class blodo_request_donation_dialog extends DialogFragment implements Tex
                 submitRequest(txtcontactname.getText().toString(),txtcontactnumber.getText().toString(),spinner.getSelectedItem().toString(),spncity.getSelectedItem().toString());
             }
         });
+
+        Button btncancel=(Button)view.findViewById(R.id.btncancel);
+        btncancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+              //  submitRequest(txtcontactname.getText().toString(),txtcontactnumber.getText().toString(),spinner.getSelectedItem().toString(),spncity.getSelectedItem().toString());
+                getDialog().dismiss();
+            }
+        });
         getDialog().getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 

@@ -17,7 +17,7 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
         android:layout_margin="10dp"
-        android:src="@drawable/applogo"
+        app:srcCompat="@drawable/applogo"
         android:id="@+id/imglogo"
         />
     <TextView
@@ -75,10 +75,10 @@
             android:layout_below="@+id/spbgroup"
             android:layout_margin="5dp"
             />
-        <Spinner
-            android:id="@+id/spncity"
+        <AutoCompleteTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/spncity"
             android:layout_below="@+id/lblcity"
             android:layout_margin="5dp"
             />
@@ -93,7 +93,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#ff0000"
+            android:textColor="@color/about_youtube_color"
             android:background="#ffffff"
             android:text="Register"
             android:id="@+id/btnregister"
@@ -103,7 +103,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#ff0000"
+            android:textColor="@color/about_youtube_color"
             android:background="#ffffff"
             android:text="Skip"
             android:id="@+id/btnskip"

@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -47,7 +48,7 @@ public class donor_list_fragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
+    private int mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
@@ -81,7 +82,7 @@ public class donor_list_fragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam1 = getArguments().getInt(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
@@ -135,6 +136,7 @@ public class donor_list_fragment extends Fragment {
     }
     private void renderDonorList(String msg)
     {
+
         try {
             JSONObject jsonObject = new JSONObject(msg);
             JSONArray array = jsonObject.getJSONArray("donors");
@@ -153,7 +155,7 @@ public class donor_list_fragment extends Fragment {
             mAdapter = new DonorCardAdapter((BlodoDashboard)getActivity(),data);
             recyclerView.setAdapter(mAdapter);
         } catch (JSONException e) {
-            e.printStackTrace();
+            Toast.makeText(this.getActivity(),"Unexpected Error Occurred",Toast.LENGTH_SHORT).show();
         }
 
     }

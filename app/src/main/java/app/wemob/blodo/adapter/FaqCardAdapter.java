@@ -1,6 +1,7 @@
 package app.wemob.blodo.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +40,7 @@ public class FaqCardAdapter  extends RecyclerView.Adapter<FaqCardAdapter.ViewHol
     public void onBindViewHolder(FaqCardAdapter.ViewHolder holder, int position) {
         String[] list =  Faqs.get(position);
         holder.txtQuestion.setText(list[0]);
-        holder.txtAnswer.setText(list[1]);
+        holder.txtAnswer.setText(Html.fromHtml(list[1]));
 
 
     }

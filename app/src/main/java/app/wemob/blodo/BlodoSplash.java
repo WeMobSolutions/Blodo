@@ -14,9 +14,12 @@ import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+import app.wemob.blodo.utils.Validator;
 
 public class BlodoSplash extends AppCompatActivity {
 
@@ -26,7 +29,7 @@ public class BlodoSplash extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blodo_splash);
-        showHashKey(this);
+       // getSecretKey();
         final BlodoSplash sPlashScreen = this;
 
         // The thread to wait for splash screen events
@@ -57,24 +60,32 @@ public class BlodoSplash extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.setClass(sPlashScreen, BlodoDashboard.class);
                     startActivity(intent);
-                    finish();
+                   finish();
                 }
             }
         };
 
-        mSplashThread.start();
+       mSplashThread.start();
     }
-    public static void showHashKey(Context context) {
+    private String getSecretKey() {
+        MessageDigest md = null;
         try {
-            PackageInfo info = context.getPackageManager().getPackageInfo(
-                    "app.wemob.blodo", PackageManager.GET_SIGNATURES); //Your            package name here
+            PackageInfo info = this.getPackageManager().getPackageInfo(
+                    this.getPackageName(),
+                    PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
+                md = MessageDigest.getInstance("SHA");
                 md.update(signature.toByteArray());
-                Log.i("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
             }
         } catch (PackageManager.NameNotFoundException e) {
+
         } catch (NoSuchAlgorithmException e) {
+
         }
+        //Log.i("SecretKey = ", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+      //  Validator.showToast(this,Base64.encodeToString(md.digest(), Base64.DEFAULT));
+        return Base64.encodeToString(md.digest(), Base64.DEFAULT);
     }
+
+
 }
