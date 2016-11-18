@@ -5,9 +5,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -23,6 +28,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import app.wemob.blodo.ApiLinks;
 import app.wemob.blodo.BlodoDashboard;
@@ -41,7 +47,7 @@ import cz.msebera.android.httpclient.Header;
  * Use the {@link donor_list_fragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class donor_list_fragment extends Fragment {
+public class donor_list_fragment extends Fragment implements SearchView.OnQueryTextListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -58,6 +64,7 @@ public class donor_list_fragment extends Fragment {
 
     DonorCardAdapter mAdapter;
 
+    ArrayList<BlodoDonor> mDonorModel;
     public donor_list_fragment() {
         // Required empty public constructor
     }
@@ -90,6 +97,9 @@ public class donor_list_fragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        setHasOptionsMenu(true);
+
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this.getActivity());
@@ -101,6 +111,32 @@ public class donor_list_fragment extends Fragment {
 
         getDataSet();
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main, menu);
+
+        final MenuItem item = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+        searchView.setOnQueryTextListener(this);
+
+        MenuItemCompat.setOnActionExpandListener(item,
+                new MenuItemCompat.OnActionExpandListener() {
+                    @Override
+                    public boolean onMenuItemActionCollapse(MenuItem item) {
+                        // Do something when collapsed
+                        mAdapter.setFilter(mDonorModel);
+                        return true; // Return true to collapse action view
+                    }
+
+                    @Override
+                    public boolean onMenuItemActionExpand(MenuItem item) {
+                        // Do something when expanded
+                        return true; // Return true to expand action view
+                    }
+                });
+    }
+
 
     private void getDataSet() {
 
@@ -140,7 +176,7 @@ public class donor_list_fragment extends Fragment {
         try {
             JSONObject jsonObject = new JSONObject(msg);
             JSONArray array = jsonObject.getJSONArray("donors");
-            ArrayList<BlodoDonor> data=new ArrayList<BlodoDonor>();
+            mDonorModel=new ArrayList<BlodoDonor>();
             for(int i=0; i<array.length(); i++){
                 BlodoDonor temp=new BlodoDonor();
                 JSONObject j = array.getJSONObject(i);
@@ -149,10 +185,10 @@ public class donor_list_fragment extends Fragment {
                 temp.setCity(j.getString("district"));
                 temp.setBgroup(j.getString("bgroup"));
                 temp.setUserstatus(j.getInt("status"));
-                data.add(temp);
+                mDonorModel.add(temp);
             }
 
-            mAdapter = new DonorCardAdapter((BlodoDashboard)getActivity(),data);
+            mAdapter = new DonorCardAdapter((BlodoDashboard)getActivity(),mDonorModel);
             recyclerView.setAdapter(mAdapter);
         } catch (JSONException e) {
             Toast.makeText(this.getActivity(),"Unexpected Error Occurred",Toast.LENGTH_SHORT).show();
@@ -190,5 +226,35 @@ public class donor_list_fragment extends Fragment {
         mListener = null;
     }
 
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        final List<BlodoDonor> filteredModelList = filter(mDonorModel, newText);
+        mAdapter.setFilter(filteredModelList);
+        return true;
+
+    }
+    private List<BlodoDonor> filter(List<BlodoDonor> models, String query) {
+        query = query.toLowerCase();
+
+        final List<BlodoDonor> filteredModelList = new ArrayList<>();
+        for (BlodoDonor model : models) {
+            final String place = model.getCity().toLowerCase();
+            final String bgroup=model.getBgroup().toLowerCase();
+            if (place.contains(query)) {
+                filteredModelList.add(model);
+            }
+            else if(bgroup.contains(query))
+            {
+                filteredModelList.add(model);
+            }
+        }
+        return filteredModelList;
+    }
 
 }

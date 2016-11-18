@@ -41,6 +41,7 @@ public class DonorCardAdapter extends RecyclerView.Adapter<DonorCardAdapter.View
 
     List<BlodoDonor> donors;
     BlodoDashboard parentObj;
+    List<BlodoDonor> filter;
 
     public DonorCardAdapter(BlodoDashboard parent, ArrayList<BlodoDonor> donorslist) {
         super();
@@ -106,6 +107,15 @@ public class DonorCardAdapter extends RecyclerView.Adapter<DonorCardAdapter.View
     @Override
     public int getItemCount() {
         return donors.size();
+    }
+
+    public void setFilter(List<BlodoDonor> filter) {
+
+        donors = new ArrayList<>();
+        donors.addAll(filter);
+        notifyDataSetChanged();
+
+        this.filter = filter;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{

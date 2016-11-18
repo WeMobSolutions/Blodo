@@ -9,8 +9,8 @@ android {
         applicationId "app.wemob.blodo"
         minSdkVersion 17
         targetSdkVersion 23
-        versionCode 2
-        versionName "1.01"
+        versionCode 3
+        versionName "1.02"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {

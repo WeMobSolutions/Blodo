@@ -59,4 +59,5 @@
     <string name="failed">Verification failed</string>
     <string name="entercode">Please enter the code you received</string>
     <string name="network_err">Check your device\'s network connectivity</string>
+    <string name="action_search">Search Donors</string>
 </resources>
