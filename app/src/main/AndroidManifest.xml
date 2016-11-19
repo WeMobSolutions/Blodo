@@ -39,7 +39,8 @@
             android:label="@string/title_activity_blodo_dashboard"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".BlodoOTPVerification"></activity>
+        <activity  android:screenOrientation="portrait" android:name=".BlodoOTPVerification" android:theme="@style/AppTheme.NoActionBar" ></activity>
+        <activity  android:screenOrientation="portrait" android:name=".BlodoUserVerification" android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

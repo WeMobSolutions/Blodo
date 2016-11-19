@@ -1,21 +1,22 @@
 package app.wemob.blodo;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.Manifest;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -30,16 +31,40 @@ import org.json.JSONObject;
 import app.wemob.blodo.utils.Validator;
 import cz.msebera.android.httpclient.Header;
 
-public class BlodoOTPVerification extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback, VerificationListener {
+public class BlodoUserVerification extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback, VerificationListener {
 
     private static final String TAG = Verification.class.getSimpleName();
     private Verification mVerification;
     TextView resend_timer;
-
+    private String phoneNumber;
+    private String countryCode="91";
+    EditText txtphone;
+    Button btn_verify;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_blodo_otpverification);
+        setContentView(R.layout.activity_blodo_verify_user);
+
+          txtphone=(EditText)findViewById(R.id.inputPhone);
+
+        btn_verify=(Button)findViewById(R.id.btnverify);
+        btn_verify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                phoneNumber=txtphone.getText().toString();
+                initVerification(phoneNumber);
+            }
+        });
+
+
+    }
+
+    private void initVerification(String phoneNumber)
+    {
+        LinearLayout layout_verify=(LinearLayout)findViewById(R.id.textWrapper);
+        layout_verify.setVisibility(View.VISIBLE);
+        txtphone.setVisibility(View.INVISIBLE);
+        btn_verify.setVisibility(View.INVISIBLE);
         resend_timer = (TextView) findViewById(R.id.resend_timer);
         resend_timer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,7 +76,6 @@ public class BlodoOTPVerification extends AppCompatActivity implements ActivityC
         enableInputField(true);
         initiateVerification();
     }
-
     void createVerification(String phoneNumber, boolean skipPermissionCheck, String countryCode) {
         if (!skipPermissionCheck && ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) ==
                 PackageManager.PERMISSION_DENIED) {
@@ -88,8 +112,6 @@ public class BlodoOTPVerification extends AppCompatActivity implements ActivityC
     void initiateVerification(boolean skipPermissionCheck) {
         Intent intent = getIntent();
         if (intent != null) {
-            String phoneNumber = intent.getStringExtra(BlodoRegister.INTENT_PHONENUMBER);
-            String countryCode = intent.getStringExtra(BlodoRegister.INTENT_COUNTRY_CODE);
             TextView phoneText = (TextView) findViewById(R.id.numberText);
             phoneText.setText("+" + countryCode + phoneNumber);
             createVerification(phoneNumber, skipPermissionCheck, countryCode);
@@ -149,54 +171,75 @@ public class BlodoOTPVerification extends AppCompatActivity implements ActivityC
         ImageView checkMark = (ImageView) findViewById(R.id.checkmarkImage);
         checkMark.setVisibility(View.VISIBLE);
 
-        SharedPreferences userpreferences=getSharedPreferences("blodouser",MODE_PRIVATE);
-
-        if(!Validator.isNetworkConnectionAvailable(this))
-        {
-            Validator.showToast(this,getResources().getString(R.string.network_err));
-            return;
-        }
-
-        final int userid=userpreferences.getInt("uid",0);
-        final String nameobj=userpreferences.getString("username","");
-        final String mobileobj=userpreferences.getString("mobile", "");
-        final String bgobj=userpreferences.getString("bgroup", "");
-        final String cityobj=userpreferences.getString("city", "");
-        final int status=2;
-
         RequestParams params=new RequestParams();
-        params.put("userid",userid);
-        params.put("name", nameobj);
-        params.put("district",cityobj);
-        params.put("mobile",mobileobj);
-        params.put("bgroup",bgobj);
-        params.put("status",status);
+        params.put("mobile",phoneNumber);
+
 
 
         AsyncHttpClient client = new AsyncHttpClient();
-        client.post(this, ApiLinks.baseURL + "/updateUser", params, new AsyncHttpResponseHandler() {
+        client.post(this, ApiLinks.baseURL + "/fetchUser", params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-
-                String msg=new String(responseBody);
+                String message=new String(responseBody);
                 try {
-                    showDashBoard(msg);
-
-                }catch (Exception et){
-
+                    parseUser(message);
                 }
+                catch (Exception et)
+                {
+                    Toast.makeText(BlodoUserVerification.this,"Unexpected Error",Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+
 
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 
-                Toast.makeText(BlodoOTPVerification.this,"Unexpected Error : "+statusCode,Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
 
 
+
     }
+    private void callDashboard()
+    {
+        Intent dashboard=new Intent(this,BlodoDashboard.class);
+        startActivity(dashboard);
+        finish();
+    }
+    private void parseUser(String response) throws Exception
+    {
+        JSONObject msgjson=new JSONObject(response);
+        int status=msgjson.getInt("status");
+        if(status==0)
+        {
+            JSONObject userobj=msgjson.getJSONArray("userdata").getJSONObject(0);
+            storeUserDetails(userobj.getInt("userid"),userobj.getString("name"),userobj.getString("district"),userobj.getString("bgroup"),userobj.getString("mobile"),userobj.getInt("status"));
+            callDashboard();
+        }
+        else
+        {
+            Toast.makeText(this,"Unabled to fetch details",Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private void storeUserDetails(int userid,String name,String city,String bgroup,String mob,int status)
+    {
+        SharedPreferences userpreferences=getSharedPreferences("blodouser",MODE_PRIVATE);
+        SharedPreferences.Editor editor = userpreferences.edit();
+        editor.putInt("uid",userid);
+        editor.putString("username", name);
+        editor.putString("city", city);
+        editor.putString("bgroup", bgroup);
+        editor.putString("mobile", mob);
+        editor.putInt("status",status);
+        editor.commit();
+
+    }
+
 
     private void showDashBoard(String response) throws Exception
     {
@@ -215,8 +258,7 @@ public class BlodoOTPVerification extends AppCompatActivity implements ActivityC
         }
         else
         {
-            Toast.makeText(BlodoOTPVerification.this,msgjson.getString("message"),Toast.LENGTH_SHORT).show();
-            finish();
+            Toast.makeText(BlodoUserVerification.this,msgjson.getString("message"),Toast.LENGTH_SHORT).show();
         }
 
 
@@ -248,6 +290,7 @@ public class BlodoOTPVerification extends AppCompatActivity implements ActivityC
 
     private void startTimer() {
         resend_timer.setClickable(false);
+
         new CountDownTimer(30000, 1000) {
             int secondsLeft = 0;
 

@@ -18,6 +18,33 @@
         android:layout_marginTop="16dp"
         app:srcCompat="@drawable/applogo"
         android:visibility="visible"
+        android:id="@+id/imglogo"
+        />
+
+    <EditText
+        android:id="@+id/inputPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/imglogo"
+        android:layout_centerHorizontal="true"
+        android:hint="Enter your mobile number"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:inputType="number"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/about_youtube_color"
+        android:background="#ffffff"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/inputPhone"
+        android:text="Request OTP"
+        android:id="@+id/btnverify"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:layout_margin="5dp"
         />
 
     <LinearLayout
@@ -27,6 +54,7 @@
         android:layout_alignParentBottom="true"
         android:orientation="vertical"
         android:paddingLeft="20dp"
+        android:visibility="invisible"
         android:paddingRight="20dp">
 
         <TextView
@@ -38,7 +66,7 @@
             android:text="@string/sending_sms"
             android:textAllCaps="true"
             android:textColor="@color/colorPrimary"
-            android:textSize="18sp"/>
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 
         <TextView
             android:id="@+id/numberText"
@@ -51,8 +79,7 @@
             android:text="+46123456789"
             android:textAllCaps="true"
             android:textColor="@color/colorPrimary"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            />
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -84,6 +111,7 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:layout_marginBottom="10dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:inputType="number"/>
 
 
@@ -93,13 +121,14 @@
                     android:layout_height="60dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="10dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:minHeight="56dp"
                     android:onClick="onSubmitClicked"
                     android:text="Enter"
                     android:textAllCaps="true"
                     android:textColor="#ffffff"
                     android:background="@color/about_youtube_color"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+                    />
 
                 <TextView
                     android:id="@+id/resend_timer"

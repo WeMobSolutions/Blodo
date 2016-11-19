@@ -82,11 +82,25 @@ public class BlodoRegister extends AppCompatActivity {
             }
         });
 
+        Button btnRetrieve=(Button)findViewById(R.id.btnretrieve);
+        btnRetrieve.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkUser();
+            }
+        });
+    }
+    private void checkUser()
+    {
+        Intent checkPage=new Intent(this,BlodoUserVerification.class);
+        startActivity(checkPage);
+        finish();
     }
     private void callDashboard()
     {
         Intent dashboard=new Intent(this,BlodoDashboard.class);
         startActivity(dashboard);
+        finish();
     }
     private void registerUser(String name,String mobile,String bgroup,String city)
     {
@@ -112,10 +126,9 @@ public class BlodoRegister extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 
-
                 String msg=new String(responseBody);
                 try {
-                    showMessage(msg,1);
+                    showMessage(msg);
                 }catch (Exception et){
 
                 }
@@ -125,12 +138,7 @@ public class BlodoRegister extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 
-                String msg=new String(responseBody);
-                try {
-                    showMessage(msg,0);
-                }catch (Exception et){
-
-                }
+               Toast.makeText(BlodoRegister.this,"Unexpected Error : "+statusCode,Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -148,20 +156,40 @@ public class BlodoRegister extends AppCompatActivity {
         editor.commit();
 
     }
-    private void showMessage(String response,int status) throws Exception
+    private void showMessage(String response) throws Exception
     {
 
+
         JSONObject msgjson=new JSONObject(response);
+        int status=msgjson.getInt("status");
         Toast.makeText(this, msgjson.getString("message"), Toast.LENGTH_SHORT).show();
         resetFields();
-        if(status==1) {
+        if(status==0) {
             JSONObject userobj=msgjson.getJSONArray("userdata").getJSONObject(0);
             storeUserDetails(userobj.getInt("userid"),userobj.getString("name"),userobj.getString("district"),userobj.getString("bgroup"),userobj.getString("mobile"),userobj.getInt("status"));
             showOTPPage();
             finish();
         }
+        else if(status==2)
+        {
+            //USER EXISTS
+            String mobile=msgjson.getString("mobile");
+            showVerificationPage(mobile);
+
+        }
+        else if(status==1)
+        {
+            //UNKNOWN ERROR
+        }
     }
 
+    private void showVerificationPage(String mobile)
+    {
+        Intent verficationPage=new Intent(this,BlodoUserVerification.class);
+        verficationPage.putExtra(INTENT_PHONENUMBER,mobile);
+        verficationPage.putExtra(INTENT_COUNTRY_CODE,"91");
+        startActivity(verficationPage);
+    }
     private void showOTPPage()
     {
         SharedPreferences userpreferences=getSharedPreferences("blodouser",MODE_PRIVATE);

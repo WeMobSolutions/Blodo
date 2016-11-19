@@ -26,12 +26,14 @@
         android:layout_below="@+id/imglogo"
         android:text="BLODO"
         android:layout_centerHorizontal="true"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#FF0000"
         />
 
     <RelativeLayout
         android:layout_centerInParent="true"
         android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
         android:layout_height="wrap_content">
 
         <EditText
@@ -42,6 +44,7 @@
             android:layout_alignParentTop="true"
             android:layout_margin="5dp"
             android:inputType="text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             />
         <EditText
             android:layout_width="match_parent"
@@ -51,6 +54,7 @@
             android:layout_below="@+id/txtName"
             android:layout_margin="5dp"
             android:inputType="phone"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -58,6 +62,7 @@
             android:text="Select Your Blood Group"
             android:id="@+id/lblbgp"
             android:layout_below="@+id/txtMobile"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:layout_margin="5dp"
             />
         <Spinner
@@ -66,27 +71,23 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/lblbgp"
             android:layout_margin="5dp"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Select Your City"
-            android:id="@+id/lblcity"
-            android:layout_below="@+id/spbgroup"
-            android:layout_margin="5dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             />
         <AutoCompleteTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/spncity"
-            android:layout_below="@+id/lblcity"
+            android:layout_below="@+id/spbgroup"
+            android:hint="Enter your location"
             android:layout_margin="5dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             />
 
         <LinearLayout
             android:layout_below="@+id/spncity"
             android:layout_width="wrap_content"
             android:orientation="horizontal"
+            android:id="@+id/btnlayout"
             android:layout_alignParentRight="true"
             android:layout_height="wrap_content">
 
@@ -98,6 +99,7 @@
             android:text="Register"
             android:id="@+id/btnregister"
             android:layout_margin="5dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             />
 
         <Button
@@ -108,8 +110,39 @@
             android:text="Skip"
             android:id="@+id/btnskip"
             android:layout_margin="5dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             />
             </LinearLayout>
+
+        <RelativeLayout
+            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/btnlayout"
+            android:layout_margin="5dp"
+            android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Existing User."
+            android:id="@+id/txtlabel"
+            android:layout_centerInParent="true"
+            android:layout_alignParentLeft="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/about_youtube_color"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/about_youtube_color"
+            android:background="#ffffff"
+            android:text="Login Via OTP"
+            android:layout_toRightOf="@+id/txtlabel"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:id="@+id/btnretrieve"
+            android:layout_margin="5dp"
+            />
+            </RelativeLayout>
 
 
     </RelativeLayout>

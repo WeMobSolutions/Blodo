@@ -41,6 +41,7 @@
                 android:layout_margin="5dp"
                 android:textSize="15sp"
                 android:id="@+id/txtWelcome"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:text="" />
 
              <Button

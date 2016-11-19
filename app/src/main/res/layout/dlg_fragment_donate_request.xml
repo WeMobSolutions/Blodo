@@ -27,7 +27,8 @@
         android:imeOptions="actionDone"
         android:hint="Person to Contact"
         android:layout_margin="5dp"
-        android:padding="5dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:padding="10dp"
         android:inputType="text" />
     <EditText
         android:id="@+id/txtcontactnumber"
@@ -36,22 +37,26 @@
         android:imeOptions="actionDone"
         android:hint="Contact Number"
         android:layout_margin="5dp"
-        android:padding="5dp"
+        android:padding="10dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:inputType="phone" />
     <Spinner
         android:id="@+id/spbgroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:padding="5dp"
+        android:padding="10dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         />
 
-    <Spinner
+    <AutoCompleteTextView
         android:id="@+id/spblocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:padding="5dp"
+        android:padding="10dp"
+        android:hint="Enter your location"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         />
 
     <LinearLayout
@@ -71,6 +76,7 @@
             android:id="@+id/btnsubmit"
             android:layout_margin="5dp"
             android:padding="5dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:elevation="5dp" />
 
         <Button
@@ -82,6 +88,7 @@
             android:id="@+id/btncancel"
             android:layout_margin="5dp"
             android:padding="5dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:elevation="5dp" />
 
     </LinearLayout>

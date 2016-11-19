@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -85,7 +86,7 @@ public class blodo_request_donation_dialog extends DialogFragment implements Tex
         Log.e("Error","Inside View creation");
 
         ArrayAdapter<String> locationAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, locationArray);
-        final Spinner spncity = (Spinner)view.findViewById(R.id.spblocation);
+        final AutoCompleteTextView spncity = (AutoCompleteTextView)view.findViewById(R.id.spblocation);
         locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spncity.setAdapter(locationAdapter);
 
@@ -94,7 +95,7 @@ public class blodo_request_donation_dialog extends DialogFragment implements Tex
         btnsubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                submitRequest(txtcontactname.getText().toString(),txtcontactnumber.getText().toString(),spinner.getSelectedItem().toString(),spncity.getSelectedItem().toString());
+                submitRequest(txtcontactname.getText().toString(),txtcontactnumber.getText().toString(),spinner.getSelectedItem().toString(),spncity.getText().toString().toString());
             }
         });
 
